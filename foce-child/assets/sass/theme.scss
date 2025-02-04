@@ -1,0 +1,481 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Mixin pour l'animation fade-in (utilisation d'un mixin car valeur duration constante, permet d'éviter d'avoir à la retaper à chaque application de l'animation - Pas essentiel ici mais c'ets histoire de tester le mixin)
+@mixin fade-in($delay) {
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out $delay forwards;
+}
+
+// Définition de l'animation
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+// Les sections sont invisibles au départ
+section:nth-child(1) {
+  @include fade-in(0s); // Inclure le mixin pour le fade-in
+}
+
+// Les sections sont invisibles au départ
+section:nth-child(2) {
+  @include fade-in(0.5s); // Inclure le mixin pour le fade-in
+}
+
+// Les sections sont invisibles au départ
+section:nth-child(3) {
+  @include fade-in(1s); // Inclure le mixin pour le fade-in
+}
+
+// Les sections sont invisibles au départ
+section:nth-child(4) {
+  @include fade-in(1.5s); // Inclure le mixin pour le fade-in
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Définition de l'animation de rotation de fleur (ici définition (keyframes) directement sans passer par mixin (on aurait pu faire ça au dessus égalemnt oui)
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.story h2::after{
+  width: 155px;
+  height: 155px;
+}
+
+.story__article::after{
+  width: 188px;
+  height: 188px;
+}
+
+#studio h2::before{
+  height: 201px;
+  width: 203px;
+}
+#studio h2::after {
+  height:105px;
+  width: 203px;
+}
+
+footer#colophon.site-footer::after{
+  height: 168px;
+  width: 173px;
+}
+footer#colophon.site-footer::before{
+  height: 155px;
+  width: 155px;
+}
+
+
+//Application de l'animation (en une seul fois car mêmes valeurs pour tous dans la structure de l'animation qui leur est appliquée)
+.story__article::after,
+.story h2::after,
+#studio h2::before,
+#studio h2::after,
+footer#colophon.site-footer::before,
+footer#colophon.site-footer::after,
+ul::after,
+.left1,
+.left3,
+.right1,
+.right2,
+.right4 {
+  animation: rotate 3s linear infinite;
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Définition de l'aspect des h2 span avant application d el'animation de fade in définti plus bas (span créés via js)
+h2 span {
+  display: block;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+// Mixin pour l'animation fade-in du titre
+@mixin title-fade-in($duration, $delay) {
+  animation: FadeInTitle $duration ease-in-out $delay forwards;
+}
+
+// Définition de l'animation de titre
+@keyframes FadeInTitle {
+  to {
+    opacity: 1;
+    transform: translateY(0); // Position finale
+  }
+}
+
+// Application de l'animation au texte dans le span de h2
+.animate {
+  @include title-fade-in(1s, 0s);
+}
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.banner {
+  position: relative;
+}
+
+.banner video {
+  position: absolute;
+  object-fit: cover;
+}
+
+@keyframes float {
+    0% {
+        transform: translateX(0px) translateY(15px);
+    }
+    25% {
+        transform: translateX(15px) translateY(0px);
+    }
+    50% {
+        transform: translateX(0px) translateY(-15px);
+    }
+    75% {
+        transform: translateX(-15px) translateY(0px);
+    }
+    100% {
+        transform: translateX(0px) translateY(15px);
+    }
+}
+
+.parallax-title {
+  z-index: 1;
+  position: sticky;
+  top:75px;
+  margin-bottom: 30px;;
+  object-fit: cover;
+  animation: float 3s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .banner video {
+      display: none;
+  }
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.swiper-slide {
+  background-position: center;
+  background-size: fit;
+  width: 375px!important ;
+  padding: 30px;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+}
+
+#characters {
+  max-width: 1430px;
+  flex-direction: column;
+  align-items: start;
+  overflow: hidden;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.story #place {
+  background-image: url("../images/Studio-Koukaki-image-lieu.png") !important;
+  width: 100%;
+  min-height: 699px;
+  background-size: cover;
+  position: relative; /* Nécessaire pour que .clouds se positionne par rapport à #place */
+  overflow: visible; /* Assure que les enfants ne sont pas masqués */
+}
+
+
+.clouds{
+  position: absolute;
+  right: -5%;
+  top: 5%;
+  z-index: 1; /* Assure qu'elle est au-dessus du contenu */
+  transition: transform 0.1s linear; /* Transition pour des déplacements fluides */
+}
+
+@media (max-width: 768px) {
+  .clouds{
+    display: none;
+  }
+  
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.site-header{
+  position: relative;
+}
+.main-navigation{
+  position: relative;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.studio-name{
+  margin-top: 100px;
+  font-size: medium;
+}
+
+/* Style du bouton burger */
+.burger-menu {
+  position: absolute;
+  top: 25px;
+  right: 60px;
+  z-index: 3;
+  cursor: pointer;
+  width: 35px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.burger-icon {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  border-radius: 2px;
+  position: relative;
+  transition: 0.3s;
+}
+
+.burger-icon::before,
+.burger-icon::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+.burger-icon::before {
+  top: -8px;
+}
+
+.burger-icon::after {
+  bottom: -8px;
+}
+
+.logo-menu-overlay{
+  height: 125px;
+  margin-top: 60px;
+  position: relative !important;
+}
+
+/* Masquer le menu classique */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FFF5E9;
+  color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease-in-out;
+  z-index: 2;
+}
+
+.menu-overlay ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.menu-overlay ul li {
+  margin: 20px 0;
+}
+
+.menu-overlay ul li a {
+  color: black; /* Texte noir par défaut */
+  text-decoration: none; /* Pas de soulignement */
+  font-size: 64px; /* Taille du texte */
+  transition: all 0.3s ease; /* Animation fluide pour les changements */
+}
+
+.menu-overlay ul li a:hover {
+  text-shadow: 0 0 10px rgba(255, 152, 0, 0.8), /* Glow léger */
+               0 0 20px rgba(255, 152, 0, 0.6); /* Glow plus intense */
+  color: black; /* Texte reste noir */
+}
+
+/* Animation d'ouverture */
+.menu-overlay.active {
+  transform: translateY(0);
+}
+
+/* Animation du burger */
+.burger-menu.active .burger-icon {
+  background-color: transparent;
+}
+
+.burger-menu.active .burger-icon::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.burger-menu.active .burger-icon::after {
+  transform: rotate(-45deg);
+  bottom: 0;
+}
+
+.menu-overlay{
+  overflow: hidden;
+}
+
+.menu-overlay img{
+  position: absolute;  /* Pour pouvoir positionner l'image à des coordonnées spécifiques */
+}
+
+.left1 {
+  width: 172px;
+  height: 168px;
+  top: 152px;
+  left: -59px;
+}
+
+.left2{
+  width: 109px;
+  height: 98px;
+  top: 274px;
+  left: 267px;
+}
+
+.left3{
+  width: 70px;
+  height: 70px;
+  top: 500px;
+  left: 213px;
+}
+
+.left4{
+  width: 105px;
+  height: 95px;
+  top: 650px;
+  left: 79px;
+}
+
+.right1{
+  width: 216px;
+  height: 216px;
+  top: 169px;
+  right: 139px;
+}
+
+.right2{
+  width: 75px;
+  height: 74px;
+  top: 430px;
+  right: 0px;
+  
+}
+
+.right3{
+  width: 154px;
+  height: 147px;
+  top: 550px;
+  right: 224px;
+}
+
+.right4{
+  width: 426px;
+  height: 426px;
+  top: 650px;
+  right: -200px;
+}
+
+.left2,
+.left4,
+.right3{
+  animation: float 6s ease-in-out infinite;
+}
+
+.nomination-oscars{
+  margin-top: 3em;
+  margin-left: 4em;
+  margin-right: 4em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.conteneur-texte{
+  background-image: url("../images/Rectangle-23.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex; /* Active le modèle flexbox */
+  justify-content: center; /* Centre horizontalement */
+  align-items: center; /* Centre verticalement */
+  text-align: center; /* Centre le texte à l'intérieur */
+  width: 900px;
+  height: 400px;
+}
+
+.conteneur-texte p{
+  text-align: center;
+  font-family: Quicksand;
+  color: #FFF5E9;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 52.5px;
+  letter-spacing: -0.02em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+@media (max-width: 1200px){
+  .left2, .left3, .right1, .right3{
+    display: none;
+  }
+  #characters {
+      align-items: center;
+      overflow: hidden;
+    }
+    .swiper{
+      width: 1000px;
+    }
+  }
+
+@media (max-width: 768px){
+  .nomination-oscars{
+    margin: 1em;
+  }
+  .conteneur-texte{
+    height: 200px;
+  }
+  .conteneur-texte p{
+    font-size: 20px;
+    line-height: 20px;
+  }
+  .menu-overlay img{
+    display: none;
+  }
+  .swiper{
+    width: 400px;
+  }
+}
